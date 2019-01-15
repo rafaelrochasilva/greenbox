@@ -1,6 +1,13 @@
 # Greenbox
 
 **TODO: Add description**
+Greenbox is an online store that sells natural organic beauty products, where
+users can choose a diffent variaty of products and mount its own box.
+
+We have a stock that changes its prices every 30 minutes, due to our crazy
+promotions. The app, check the prices every 30 minutes, to keep the products name and
+price updated.
+
 
 ## Installation
 
