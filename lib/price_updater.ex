@@ -1,4 +1,4 @@
-defmodule GreenBox.PriceUpdater do
+defmodule Greenbox.PriceUpdater do
   use GenServer
 
   @time_to_consume 10000 # 10 seconds
@@ -38,8 +38,6 @@ defmodule GreenBox.PriceUpdater do
   defp schedule_work() do
     Process.send_after(self(), :get_products, @time_to_consume)
   end
-
-
 
   defp build_products() do
     fetch_products()
