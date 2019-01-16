@@ -1,4 +1,6 @@
 defmodule Greenbox.ProductFetcher do
+  alias Greenbox.Product
+
   def build() do
     fetch_products()
     |> proccess_products()
@@ -6,22 +8,12 @@ defmodule Greenbox.ProductFetcher do
 
   defp proccess_products(products) do
     Enum.map(products, fn %{id: id, name: name, price: price} ->
-      %{
+      %Product{
         id: id,
-        name: capitalize_name(name),
-        price: price_to_money(price)
+        name: Product.capitalize_name(name),
+        price: Product.price_to_money(price)
       }
     end)
-  end
-
-  defp price_to_money(price) do
-    "$#{price / 100}"
-  end
-
-  defp capitalize_name(name) do
-    name
-    |> String.downcase()
-    |> String.capitalize()
   end
 
   defp fetch_products do
