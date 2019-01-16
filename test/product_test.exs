@@ -1,5 +1,6 @@
 defmodule Greenbox.ProductTest do
   use ExUnit.Case, async: true
+  doctest Greenbox.Product
   alias Greenbox.Product
 
   describe "Given a product" do
