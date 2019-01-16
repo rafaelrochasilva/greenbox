@@ -1,5 +1,6 @@
 defmodule Greenbox.PriceUpdater do
   use GenServer
+  alias Greenbox.ProductFetcher
 
   # 10 seconds
   @time_to_consume 10000
@@ -13,7 +14,7 @@ defmodule Greenbox.PriceUpdater do
   work will be done again
   """
   def init(_) do
-    state = build_products()
+    state = ProductFetcher.build()
     schedule_work()
     {:ok, state}
   end
@@ -26,7 +27,7 @@ defmodule Greenbox.PriceUpdater do
   Run the job and resquedule it to run again after some time.
   """
   def handle_info(:get_products, _state) do
-    products = build_products()
+    products = ProductFetcher.build()
 
     schedule_work()
     {:noreply, products}
@@ -38,30 +39,5 @@ defmodule Greenbox.PriceUpdater do
 
   defp schedule_work() do
     Process.send_after(self(), :get_products, @time_to_consume)
-  end
-
-  defp build_products() do
-    fetch_products()
-    |> proccess_products()
-  end
-
-  defp proccess_products(products) do
-    Enum.map(products, fn %{id: id, name: name, price: price} ->
-      new_name = name |> String.downcase() |> String.capitalize()
-      new_price = "$#{price / 100}"
-
-      %{
-        id: id,
-        name: new_name,
-        price: new_price
-      }
-    end)
-  end
-
-  defp fetch_products do
-    [
-      %{id: "1234", name: "BLUE OCEAN CREAM", price: Enum.random(8000..10000)},
-      %{id: "1235", name: "SEA SOAP", price: Enum.random(5000..60000)}
-    ]
   end
 end
