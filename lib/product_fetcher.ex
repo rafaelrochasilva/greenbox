@@ -2,7 +2,9 @@ defmodule Greenbox.ProductFetcher do
   alias Greenbox.Product
 
   def build() do
-    fetch_products()
+    client = get_client()
+
+    client.fetch_products()
     |> proccess_products()
   end
 
@@ -16,10 +18,7 @@ defmodule Greenbox.ProductFetcher do
     end)
   end
 
-  defp fetch_products do
-    [
-      %{id: "1234", name: "BLUE OCEAN CREAM", price: Enum.random(8000..10000)},
-      %{id: "1235", name: "SEA SOAP", price: Enum.random(5000..60000)}
-    ]
+  defp get_client do
+    Application.get_env(:greenbox, :abc_products_client)
   end
 end
