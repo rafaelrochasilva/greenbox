@@ -1,7 +1,8 @@
 defmodule Greenbox.PriceUpdater do
   use GenServer
 
-  @time_to_consume 10000 # 10 seconds
+  # 10 seconds
+  @time_to_consume 10000
 
   def start_link do
     GenServer.start_link(__MODULE__, [])
@@ -41,13 +42,14 @@ defmodule Greenbox.PriceUpdater do
 
   defp build_products() do
     fetch_products()
-    |> proccess_products
+    |> proccess_products()
   end
 
   defp proccess_products(products) do
     Enum.map(products, fn %{id: id, name: name, price: price} ->
       new_name = name |> String.downcase() |> String.capitalize()
-      new_price = "$#{price/100}"
+      new_price = "$#{price / 100}"
+
       %{
         id: id,
         name: new_name,
