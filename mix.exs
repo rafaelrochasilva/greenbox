@@ -29,5 +29,8 @@ defmodule Greenbox.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(_), do: ["lib"]
+
+  # Comment this if you want to use the real client
+  defp elixirc_paths(_), do: ["lib", "test/support"]
+  # defp elixirc_paths(_), do: ["lib"]
 end
